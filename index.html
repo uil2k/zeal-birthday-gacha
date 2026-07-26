@@ -275,25 +275,27 @@ const clips = [
   video: "videos/030.mp4",
   url: "https://www.youtube.com/live/AtF7dfieHlA?si=B_6dQ-hJxV-kfTSp",
   timestamp: "From 1:51:12"
-},
-{
-  title: "HAAAAAAAAA",
-  video: "videos/031.mp4",
-  url: "",
-  timestamp: ""
-},
-{
-  title: "21st Birthday!",
-  video: "videos/032.mp4",
-  url: "",
-  timestamp: ""
-},
-{
-  title: "67th Birthday!",
-  video: "videos/033.mp4",
-  url: "",
-  timestamp: ""
 }
+];
+  const specialClips = [
+  {
+    title: "HAAAAAAAAA",
+    video: "videos/031.mp4",
+    url: "",
+    timestamp: ""
+  },
+  {
+    title: "21st Birthday!",
+    video: "videos/032.mp4",
+    url: "",
+    timestamp: ""
+  },
+  {
+    title: "67th Birthday!",
+    video: "videos/033.mp4",
+    url: "",
+    timestamp: ""
+  }
 ];
 let drawCount =
   Number(localStorage.getItem("zealDrawCount")) || 0;
@@ -309,8 +311,15 @@ button.addEventListener("click", function () {
   drawCount++;
   localStorage.setItem("zealDrawCount", drawCount);
 
+  let selected;
+
+if (Math.random() < 0.03) {
+  const specialIndex = Math.floor(Math.random() * specialClips.length);
+  selected = specialClips[specialIndex];
+} else {
   const randomIndex = Math.floor(Math.random() * clips.length);
-  const selected = clips[randomIndex];
+  selected = clips[randomIndex];
+}
 
   title.textContent = selected.title;
   video.src = selected.video;
