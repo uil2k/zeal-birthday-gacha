@@ -309,16 +309,8 @@ button.addEventListener("click", function () {
   drawCount++;
   localStorage.setItem("zealDrawCount", drawCount);
 
-  let selected;
-
-  if (drawCount === 67) {
-    selected = special67;
-  } else if (drawCount === 315) {
-    selected = special315;
-  } else {
-    const randomIndex = Math.floor(Math.random() * clips.length);
-    selected = clips[randomIndex];
-  }
+  const randomIndex = Math.floor(Math.random() * clips.length);
+  const selected = clips[randomIndex];
 
   title.textContent = selected.title;
   video.src = selected.video;
