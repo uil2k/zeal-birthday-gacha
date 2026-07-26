@@ -3,72 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zeal Birthday Gacha</title>
 
 <style>
-body{
-    background:#ffffff;
-    font-family: Arial, sans-serif;
-    text-align:center;
-    margin-top:80px;
-    color:#000;
+body {
+  background: white;
+  color: black;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 70px 15px;
 }
 
-h1{
-    font-size:38px;
-    margin-bottom:5px;
+h1 {
+  font-size: 34px;
+  margin: 0 0 8px;
 }
 
-h2{
-    color:green;
-    margin-top:0;
-    margin-bottom:50px;
+h2 {
+  color: green;
+  font-size: 27px;
+  margin: 0 0 45px;
 }
 
-button{
-    font-size:22px;
-    padding:12px 40px;
-    cursor:pointer;
-    border:2px solid green;
-    background:white;
-    color:green;
+button {
+  background: white;
+  color: green;
+  border: 2px solid green;
+  font-size: 20px;
+  padding: 10px 35px;
 }
 
-button:hover{
-    background:green;
-    color:white;
+#result {
+  display: none;
+  max-width: 600px;
+  margin: 40px auto 0;
 }
 
-.footer{
-    margin-top:70px;
-    font-size:14px;
-    color:#444;
-    line-height:1.7;
+video {
+  width: 100%;
+  max-width: 500px;
+}
+
+hr {
+  max-width: 500px;
+  margin: 40px auto;
+}
+
+.footer {
+  margin-top: 50px;
+  font-size: 14px;
+  line-height: 1.7;
 }
 </style>
-
 </head>
 
 <body>
 
 <h1>HAPPY BIRTHDAY</h1>
-
 <h2>💚 ZEAL GACHA 💚</h2>
 
-<button>DRAW</button>
+<button id="drawButton">DRAW</button>
+
+<div id="result">
+  <hr>
+
+  <h3 id="clipTitle"></h3>
+
+  <video id="clipVideo" controls playsinline></video>
+
+  <p>
+    <a id="streamLink" href="" target="_blank">
+      Original Stream
+    </a>
+  </p>
+
+  <p id="timestamp"></p>
+</div>
 
 <div class="footer">
+  <hr>
 
-<p>Unofficial Fan Project</p>
+  <p>Unofficial Fan Project</p>
 
-<p>
-Very rarely, you may get<br>
-a special voice clip from Uka.
-</p>
+  <p>
+    Very rarely, you may get<br>
+    a special voice clip from Uka.
+  </p>
 
-<p>Created by Uka</p>
-
+  <p>Created by Uka</p>
 </div>
+
+<script>
+const clips = [
+  {
+    title: "FIRST SCREAM",
+    video: "videos/001.mp4",
+    url: "https://www.youtube.com/",
+    timestamp: "From 47:52"
+  }
+];
+
+const special67 = {
+  title: "SPECIAL VOICE",
+  video: "videos/067.mp4",
+  url: "",
+  timestamp: ""
+};
+
+const special315 = {
+  title: "SPECIAL VOICE",
+  video: "videos/315.mp4",
+  url: "",
+  timestamp: ""
+};
+
+let drawCount =
+  Number(localStorage.getItem("zealDrawCount")) || 0;
+
+const button = document.getElementById("drawButton");
+const result = document.getElementById("result");
+const title = document.getElementById("clipTitle");
+const video = document.getElementById("clipVideo");
+const link = document.getElementById("streamLink");
+const timestamp = document.getElementById("timestamp");
+
+button.addEventListener("click", function () {
+  drawCount++;
+  localStorage.setItem("zealDrawCount", drawCount);
+
+  let selected;
+
+  if (drawCount === 67) {
+    selected = special67;
+  } else if (drawCount === 315) {
+    selected = special315;
+  } else {
+    const randomIndex = Math.floor(Math.random() * clips.length);
+    selected = clips[randomIndex];
+  }
+
+  title.textContent = selected.title;
+  video.src = selected.video;
+  video.load();
+
+  if (selected.url) {
+    link.href = selected.url;
+    link.style.display = "inline";
+  } else {
+    link.style.display = "none";
+  }
+
+  timestamp.textContent = selected.timestamp;
+  result.style.display = "block";
+  button.textContent = "DRAW AGAIN";
+});
+</script>
 
 </body>
 </html>
